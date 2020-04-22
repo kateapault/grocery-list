@@ -1,24 +1,34 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, ScrollList } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, ScrollList, FlatList } from 'react-native';
 
 import Header from './components/Header'
 import Input from './components/Input'
 // import List from './components/List'
 
 export default function App() {
-  const [thingsList, setThingsList] = useState([]);
-  const [enteredThing, setEnteredThing] = useState('');
+  const [productsList, setProductsList] = useState([]);
+  const [enteredProduct, setEnteredProduct] = useState('');
   const [idCount, setIDCount] = useState(1);
 
   const handleInput = newText => {
-    setEnteredThing(newText)
+    setEnteredProduct(newText)
+
     // console.log(enteredThing)
   }
 
-  const handleAddThings = newThing => {
+  const handleAddProducts = newProduct => {
+
+    setProductsList(allTheProducts => [
+      ...allTheProducts, 
+      { name: newProduct, 
+        id: idCount
+      }
+    ])
+    setIDCount(idCount + 1)
+    
     console.log('add things button pushed')
-    setThingsList([...thingsList, newThing])
-    console.log(thingsList)
+    console.log(productsList)
+    console.log(idCount)
   }
 
   return (
@@ -30,13 +40,18 @@ export default function App() {
       />
       <Button 
         title="add" 
-        onPress={handleAddThings.bind(this, enteredThing)}  
+        onPress={handleAddProducts.bind(this, enteredProduct)}  
       />
-      {/* {thingsList.map(thing => {
-        <Text>{thing}</Text>
-      })} */}
-      {/* <Text>{enteredThing}</Text> */}
-      {thingsList.map(thing=><View><Text>{thing}</Text></View>)}
+      {/* {productsList.map(product=><View><Text>{product.name}</Text></View>)} */}
+      <FlatList 
+        keyExtractor={(item,index) => item.id}
+        data={productsList}
+        renderItem={ itemData => 
+          <View>
+            <Text>{itemData.item.name}</Text>
+          </View>
+        }
+      />
     </View>
   );
 }

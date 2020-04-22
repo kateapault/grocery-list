@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TextInput, Button, ScrollList, FlatList } from 
 import Header from './components/Header'
 import Input from './components/Input'
 // import List from './components/List'
+import Product from './components/Product'
 
 export default function App() {
   const [productsList, setProductsList] = useState([]);
@@ -21,7 +22,8 @@ export default function App() {
     setProductsList(allTheProducts => [
       ...allTheProducts, 
       { name: newProduct, 
-        id: idCount
+        id: idCount,
+        crossOff: false,
       }
     ])
     setIDCount(idCount + 1)
@@ -29,6 +31,22 @@ export default function App() {
     console.log('add things button pushed')
     console.log(productsList)
     console.log(idCount)
+  }
+
+  const handleCrossOff = productID => {
+    setProductsList(currentProducts => {
+      return currentProducts.map(product => 
+        product.id === productID 
+        ? {
+          id: product.id,
+          name: product.name,
+          cross: !product.cross,
+          }
+        : product
+        )
+    })
+    console.log(`cross/uncross button pushed on id:${productID}`)
+    console.log(productsList)
   }
 
   return (
@@ -44,12 +62,16 @@ export default function App() {
       />
       {/* {productsList.map(product=><View><Text>{product.name}</Text></View>)} */}
       <FlatList 
+        style={styles.list}
         keyExtractor={(item,index) => item.id}
         data={productsList}
         renderItem={ itemData => 
-          <View>
-            <Text>{itemData.item.name}</Text>
-          </View>
+          <Product 
+            id={itemData.item.id}
+            cross={itemData.item.cross}
+            name={itemData.item.name} 
+            handleCrossOff={handleCrossOff}
+          />
         }
       />
     </View>
@@ -62,5 +84,8 @@ const styles = StyleSheet.create({
     // backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  list:{
+    width: '60%',
   },
 });

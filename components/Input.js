@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
         width: '100%',
         // flex: Constants.proportionB,
         // backgroundColor: Constants.accentColor,
-
     },
     inputBox: {
         borderWidth: 2,

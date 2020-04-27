@@ -11,18 +11,23 @@ import Constants from '../Constants'
 
 const Input = props => {
     return(
-        <View style={styles.inputView}>
-            <TextInput style={styles.inputBox} placeholder="eggs"/>
-            <Button title="add"/>
-        </View>
+    <View style={{flex:2,}}>
+
+        <TextInput 
+          placeholder="toilet paper" 
+          onChangeText={props.handleInput}
+        />
+        <Button 
+          title="add" 
+          onPress={props.handleAddProducts.bind(this, props.enteredProduct)}  
+        />
+      </View>
     )
 };
 
 const styles = StyleSheet.create({
     inputView:{
         width: '100%',
-        // flex: Constants.proportionB,
-        // backgroundColor: Constants.accentColor,
     },
     inputBox: {
         borderWidth: 2,

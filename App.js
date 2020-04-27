@@ -13,17 +13,14 @@ export default function App() {
 
   const handleInput = newText => {
     setEnteredProduct(newText)
-
-    // console.log(enteredThing)
   }
 
   const handleAddProducts = newProduct => {
-
     setProductsList(allTheProducts => [
       ...allTheProducts, 
       { name: newProduct, 
         id: idCount,
-        crossOff: false,
+        cross: false,
       }
     ])
     setIDCount(idCount + 1)
@@ -37,30 +34,27 @@ export default function App() {
     setProductsList(currentProducts => {
       return currentProducts.map(product => 
         product.id === productID 
-        ? {
-          id: product.id,
-          name: product.name,
-          cross: !product.cross,
-          }
+        ? {id: product.id, name: product.name, cross: !product.cross}
         : product
         )
     })
     console.log(`cross/uncross button pushed on id:${productID}`)
-    console.log(productsList)
   }
 
   return (
     <View style={styles.container}>
       <Text>Grocery List</Text>
-      <TextInput 
-        placeholder="toilet paper" 
-        onChangeText={handleInput}
-      />
-      <Button 
-        title="add" 
-        onPress={handleAddProducts.bind(this, enteredProduct)}  
-      />
-      {/* {productsList.map(product=><View><Text>{product.name}</Text></View>)} */}
+      <Input handleInput={handleInput}/>
+      <View>
+        <TextInput 
+          placeholder="toilet paper" 
+          onChangeText={handleInput}
+        />
+        <Button 
+          title="add" 
+          onPress={handleAddProducts.bind(this, enteredProduct)}  
+        />
+      </View>
       <FlatList 
         style={styles.list}
         keyExtractor={(item,index) => item.id}
@@ -80,7 +74,6 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     // backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',

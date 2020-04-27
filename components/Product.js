@@ -25,16 +25,20 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor:'green',
         borderWidth:1,
+        margin: 3,
     },
     plainText:{
         fontSize: 18,
-        color: 'white'
+        color: 'white',
+        textAlign: 'center',
     },
     crossedText: {
         fontSize: 18,
         color: 'white',
+        textAlign: 'center',
         textDecorationLine: 'line-through', 
         textDecorationStyle: 'solid',
+        backgroundColor: 'grey',
     },
 });
 
